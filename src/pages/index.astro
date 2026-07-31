@@ -1,0 +1,85 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PortfolioApp from "../components/portfolio/PortfolioApp";
+import PrintResume from "../components/PrintResume.astro";
+import {
+  profile,
+  contact,
+  companies,
+  technologies,
+  recommendations,
+} from "../data/cv";
+---
+
+<Layout>
+  <div class="site-shell site-shell--wide">
+    <header class="topbar no-print">
+      <a class="brand" href="#command">
+        <span class="brand-mark">RH</span>
+        <span class="brand-name">rigoberto<span>*</span></span>
+      </a>
+
+      <p class="topbar-tagline">rigohc · Full Stack</p>
+
+      <div class="topbar-actions">
+        <button class="icon-button" id="theme-toggle" type="button" aria-label="Cambiar tema">
+          <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 7 7 0 1 0 20 14.5z"></path>
+          </svg>
+        </button>
+        <button class="cta-link cta-link--outline" id="print-resume" type="button">
+          CV PDF ↓
+        </button>
+        <a class="cta-link" href={contact.linkedin} target="_blank" rel="noopener noreferrer">
+          LinkedIn ↗
+        </a>
+      </div>
+    </header>
+
+    <div class="screen-only">
+      <PortfolioApp
+        client:load
+        name={profile.name}
+        title={profile.title}
+        summary={profile.summary}
+        tagline={profile.tagline}
+        email={contact.email}
+        contact={contact}
+        companies={companies}
+        technologies={technologies}
+        recommendations={recommendations}
+      />
+
+      <footer class="footer footer--compact">
+        <div class="footer-brand">© {new Date().getFullYear()} · {profile.name}</div>
+        <div class="footer-signature">
+          <p>{profile.title} · {profile.tagline}</p>
+        </div>
+        <div class="social-links no-print">
+          <a href={`https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(contact.whatsappMessage)}`} target="_blank" rel="noopener noreferrer"><span>💬</span> WhatsApp</a>
+          <a href={`mailto:${contact.email}`}><span>✉</span> Email</a>
+          <a href="https://github.com/rigohc" target="_blank" rel="noopener noreferrer"><span>⌘</span> GitHub</a>
+        </div>
+      </footer>
+    </div>
+
+    <PrintResume />
+  </div>
+</Layout>
+
+<style is:global>
+  .site-shell--wide {
+    width: min(100%, 100%);
+    border-inline: 0;
+  }
+</style>
+
+<script>
+  document.getElementById("print-resume")?.addEventListener("click", () => {
+    window.print();
+  });
+</script>
