@@ -1,7 +1,8 @@
 import type { APIRoute } from "astro";
 import OpenAI from "openai";
 import { contact, experience, profile, skills } from "../../data/cv";
-import { assistantKnowledge, featuredProjects } from "../../data/portfolio";
+import { featuredProjects } from "../../data/portfolio";
+import { assistantAnswerService } from "../../lib/assistant/AssistantAnswerService";
 
 export const prerender = false;
 
@@ -27,16 +28,6 @@ Usa exclusivamente la información del portafolio incluida abajo. No inventes ex
 CONTEXTO DEL PORTAFOLIO:
 ${portfolioContext}`;
 
-function findLocalAnswer(input: string): string {
-  const normalized = input.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
-  for (const entry of assistantKnowledge) {
-    if (entry.keywords.some((keyword) => normalized.includes(keyword))) {
-      return entry.answer;
-    }
-  }
-  return "Puedo contarte sobre mi experiencia en Andromeda, HEB/SISMEX, Magento, VTEX, mi stack o cómo contactarme. ¿Qué te interesa?";
-}
-
 export const POST: APIRoute = async ({ request }) => {
   let message: unknown;
 
@@ -53,7 +44,7 @@ export const POST: APIRoute = async ({ request }) => {
   const trimmed = message.trim().slice(0, maxMessageLength);
 
   if (!import.meta.env.OPENAI_API_KEY) {
-    return Response.json({ text: findLocalAnswer(trimmed), source: "local" });
+    return Response.json({ text: assistantAnswerService.findLocalAnswer(trimmed), source: "local" });
   }
 
   const openai = new OpenAI({ apiKey: import.meta.env.OPENAI_API_KEY });
@@ -77,7 +68,7 @@ export const POST: APIRoute = async ({ request }) => {
     const status = error instanceof OpenAI.APIError ? error.status : undefined;
     console.error("Portfolio assistant error:", status ?? "unknown");
 
-    const fallback = findLocalAnswer(trimmed);
+    const fallback = assistantAnswerService.findLocalAnswer(trimmed);
     if (status === 429) {
       return Response.json({ text: fallback, source: "local", notice: "Cuota IA agotada, respuesta local." });
     }

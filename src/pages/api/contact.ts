@@ -51,7 +51,7 @@ async function sendViaWeb3Forms(payload: Record<string, string>): Promise<void> 
       ...payload,
       botcheck: "",
       subject: "Nuevo mensaje — Portafolio Rigoberto",
-      from_name: "Portafolio RH",
+      from_name: "Portafolio RC",
     }),
   });
 

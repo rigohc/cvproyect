@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { assistantKnowledge } from "../../data/portfolio";
+import { assistantAnswerService } from "../../lib/assistant/AssistantAnswerService";
+import AudioPlayerWidget from "./AudioPlayerWidget";
+import "./PortfolioAssistant.css";
 
 interface Message {
   role: "user" | "assistant";
@@ -8,20 +10,11 @@ interface Message {
   source?: "ai" | "local";
 }
 
-function findLocalAnswer(input: string): string | null {
-  const normalized = input.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
-  for (const entry of assistantKnowledge) {
-    if (entry.keywords.some((keyword) => normalized.includes(keyword))) {
-      return entry.answer;
-    }
-  }
-  return null;
-}
-
 export default function PortfolioAssistant() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [audioText, setAudioText] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -42,6 +35,7 @@ export default function PortfolioAssistant() {
     setMessages((prev) => [...prev, { role: "user", text }]);
     setInput("");
     setIsLoading(true);
+    setAudioText(null);
 
     try {
       const response = await fetch("/api/assistant", {
@@ -52,32 +46,25 @@ export default function PortfolioAssistant() {
       const result = (await response.json()) as { text?: string; error?: string; source?: string };
 
       if (response.ok && result.text) {
-        setMessages((prev) => [
-          ...prev,
-          { role: "assistant", text: result.text, source: "ai" },
-        ]);
+        setMessages((prev) => [...prev, { role: "assistant", text: result.text!, source: "ai" }]);
+        setAudioText(result.text);
         return;
       }
 
-      const local = findLocalAnswer(text);
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          text: local ?? result.error ?? "Puedo contarte sobre Andromeda, HEB, Magento, VTEX, mi stack o contacto. ¿Qué te interesa?",
-          source: "local",
-        },
-      ]);
+      const fallbackText =
+        assistantAnswerService.findLocalAnswer(text) ??
+        result.error ??
+        "Puedo contarte sobre Andromeda, HEB, Magento, VTEX, mi stack o contacto. ¿Qué te interesa?";
+
+      setMessages((prev) => [...prev, { role: "assistant", text: fallbackText, source: "local" }]);
+      setAudioText(fallbackText);
     } catch {
-      const local = findLocalAnswer(text);
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          text: local ?? "No pude conectar con el asistente remoto. Intenta WhatsApp o el formulario de contacto.",
-          source: "local",
-        },
-      ]);
+      const catchText =
+        assistantAnswerService.findLocalAnswer(text) ??
+        "No pude conectar con el asistente remoto. Intenta WhatsApp o el formulario de contacto.";
+
+      setMessages((prev) => [...prev, { role: "assistant", text: catchText, source: "local" }]);
+      setAudioText(catchText);
     } finally {
       setIsLoading(false);
     }
@@ -122,113 +109,15 @@ export default function PortfolioAssistant() {
                 placeholder="¿Qué construiste en Andromeda?"
                 disabled={isLoading}
               />
-              <button type="button" onClick={send} disabled={isLoading} aria-label="Enviar mensaje">→</button>
+              <button type="button" onClick={send} disabled={isLoading} aria-label="Enviar mensaje">
+                →
+              </button>
             </div>
           </motion.div>
         ) : null}
       </AnimatePresence>
 
-      <style>{`
-        .assistant-fab {
-          position: fixed;
-          z-index: 100;
-          right: 24px;
-          bottom: 24px;
-          width: 54px;
-          height: 54px;
-          border: none;
-          border-radius: var(--radius-md);
-          background: var(--gradient);
-          color: white;
-          font-family: var(--font-display);
-          font-size: 13px;
-          font-weight: 700;
-          cursor: pointer;
-          box-shadow: var(--shadow);
-          transition: transform 160ms ease;
-        }
-        .assistant-fab:hover { transform: translateY(-2px); }
-        .assistant-panel {
-          position: fixed;
-          z-index: 99;
-          right: 24px;
-          bottom: 92px;
-          display: grid;
-          grid-template-rows: auto 1fr auto;
-          width: min(380px, calc(100vw - 48px));
-          height: 440px;
-          border: 1px solid var(--line);
-          border-radius: var(--radius-md);
-          background: var(--bg-card);
-          box-shadow: var(--shadow);
-          overflow: hidden;
-        }
-        .assistant-panel header {
-          padding: 14px 16px;
-          border-bottom: 1px solid var(--line);
-        }
-        .assistant-panel header strong { display: block; font-size: 13px; }
-        .assistant-panel header span { color: var(--text-faint); font-size: 10px; }
-        .assistant-messages {
-          overflow-y: auto;
-          padding: 12px;
-          display: grid;
-          gap: 8px;
-          align-content: start;
-        }
-        .assistant-msg {
-          max-width: 90%;
-          padding: 8px 10px;
-          border-radius: 6px;
-          font-size: 11px;
-          line-height: 1.55;
-        }
-        .assistant-msg--assistant {
-          justify-self: start;
-          background: var(--bg-soft);
-          color: var(--text-soft);
-        }
-        .assistant-msg--user {
-          justify-self: end;
-          background: var(--accent-soft);
-          color: var(--text);
-        }
-        .assistant-tag {
-          display: block;
-          margin-top: 4px;
-          color: var(--text-faint);
-          font-size: 9px;
-          font-style: normal;
-          font-family: var(--font-mono);
-        }
-        .assistant-input {
-          display: grid;
-          grid-template-columns: 1fr auto;
-          gap: 8px;
-          padding: 12px;
-          border-top: 1px solid var(--line);
-        }
-        .assistant-input input {
-          border: 1px solid var(--line);
-          border-radius: var(--radius-sm);
-          padding: 10px 12px;
-          background: var(--bg-raised);
-          font-size: 12px;
-          outline: none;
-        }
-        .assistant-input input:focus { border-color: var(--accent); }
-        .assistant-input button {
-          width: 40px;
-          border: 0;
-          border-radius: var(--radius-sm);
-          background: var(--gradient);
-          color: white;
-          cursor: pointer;
-          font-size: 16px;
-        }
-        .assistant-input input:disabled,
-        .assistant-input button:disabled { cursor: wait; opacity: 0.7; }
-      `}</style>
+      {audioText ? <AudioPlayerWidget text={audioText} onClose={() => setAudioText(null)} /> : null}
     </>
   );
 }
