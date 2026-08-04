@@ -100,3 +100,25 @@
   0% { height: 20%; }
   100% { height: 100%; }
 }
+
+@media (max-width: 900px) {
+  .audio-widget {
+    bottom: calc(72px + var(--safe-bottom));
+    width: min(360px, calc(100vw - 32px));
+  }
+}
+
+@media (max-width: 640px) {
+  .audio-widget {
+    bottom: calc(68px + var(--safe-bottom));
+    left: 12px;
+    right: 12px;
+    transform: none !important;
+    width: auto;
+    grid-template-columns: auto 1fr auto;
+    gap: 8px;
+    padding: 8px 10px;
+  }
+  .audio-visualizer { display: none; }
+  .audio-text { font-size: 10px; }
+}

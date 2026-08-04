@@ -90,4 +90,12 @@
 @media (max-width: 720px) {
   .gallery-grid { grid-template-columns: 1fr 1fr; }
   .gallery-grid .gallery-card:last-child { grid-column: span 2; }
+  .gallery-card--featured { max-height: 240px; }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+  .gallery-grid .gallery-card:last-child { grid-column: auto; }
+  .gallery-lightbox { padding: 12px; }
+  .gallery-lightbox-close { top: 12px; right: 12px; }
 }

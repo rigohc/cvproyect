@@ -97,3 +97,33 @@
 }
 .assistant-input input:disabled,
 .assistant-input button:disabled { cursor: wait; opacity: 0.7; }
+
+@media (max-width: 900px) {
+  .assistant-fab {
+    right: 16px;
+    bottom: calc(16px + var(--safe-bottom));
+    width: 48px;
+    height: 48px;
+    font-size: 12px;
+  }
+  .assistant-panel {
+    right: 16px;
+    left: 16px;
+    width: auto;
+    bottom: calc(76px + var(--safe-bottom));
+    height: min(440px, calc(100dvh - 160px));
+  }
+}
+
+@media (max-width: 640px) {
+  .assistant-fab {
+    right: 12px;
+    bottom: calc(12px + var(--safe-bottom));
+  }
+  .assistant-panel {
+    right: 12px;
+    left: 12px;
+    bottom: calc(68px + var(--safe-bottom));
+    height: min(420px, calc(100dvh - 140px));
+  }
+}

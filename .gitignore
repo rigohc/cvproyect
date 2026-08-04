@@ -4,6 +4,7 @@ CLAUDE.md
 Guía de estudio
 node_modules
 dist
+.cursor
 .env
 .env.example
 .vercel

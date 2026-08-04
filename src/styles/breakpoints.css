@@ -1,0 +1,11 @@
+/* Breakpoints del proyecto — usar en @media queries */
+
+:root {
+  /* Referencia para documentación; media queries usan valores literales */
+  --bp-mobile-max: 480px;
+  --bp-tablet-max: 900px;
+  --bp-desktop-min: 901px;
+  --content-max: 1180px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+}

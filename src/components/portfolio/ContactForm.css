@@ -130,5 +130,8 @@
 .contact-feedback--ok { color: var(--accent-2); }
 .contact-feedback--err { color: #ff6b6b; }
 @media (max-width: 600px) {
+  .contact-form { padding: 18px; }
   .contact-form-grid { grid-template-columns: 1fr; }
+  .whatsapp-btn { padding: 14px; }
+  .whatsapp-btn-icon { width: 40px; height: 40px; }
 }

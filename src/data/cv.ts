@@ -284,9 +284,9 @@ export const companies: CompanyItem[] = [
     description:
       "Liderazgo técnico en React, Next.js, Node.js, VTEX, Magento 2 y microservicios para retail.",
     tags: ["React", "VTEX", "Node.js"],
-    initials: "HB",
+    initials: "HEB",
     accent: "#4ecdc4",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/HEB_logo.svg/120px-HEB_logo.svg.png",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/b/b1/HEB_logo.svg",
   },
   {
     id: "heb-morwi",
@@ -297,9 +297,9 @@ export const companies: CompanyItem[] = [
     description:
       "Módulos custom, APIs REST/SOAP, CI/CD y extensiones avanzadas en Magento 2.3.5.",
     tags: ["Magento 2", "PHP", "CI/CD"],
-    initials: "HB",
+    initials: "HEB",
     accent: "#5ce1e6",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/HEB_logo.svg/120px-HEB_logo.svg.png",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/b/b1/HEB_logo.svg",
   },
   {
     id: "heb-playful",
@@ -310,9 +310,9 @@ export const companies: CompanyItem[] = [
     description:
       "Desarrollo con Magento 1 y CodeIgniter, análisis de requerimientos y metodología ágil.",
     tags: ["Magento 1", "CodeIgniter", "Git"],
-    initials: "HB",
+    initials: "HEB",
     accent: "#ff9f43",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/HEB_logo.svg/120px-HEB_logo.svg.png",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/b/b1/HEB_logo.svg",
   },
 ];
 
@@ -326,15 +326,15 @@ export const technologies: TechItem[] = [
   { id: "python", name: "Python", slug: "python", color: "#3776AB", category: "backend" },
   { id: "php", name: "PHP", slug: "php", color: "#777BB4", category: "backend" },
   { id: "java", name: "Java", slug: "openjdk", color: "#ffffff", category: "backend" },
-  { id: "csharp", name: "C#", slug: "csharp", color: "#512BD4", category: "backend" },
+  { id: "dotnet", name: "C#", slug: "dotnet", color: "#512BD4", category: "backend" },
   { id: "rabbitmq", name: "RabbitMQ", slug: "rabbitmq", color: "#FF6600", category: "infra" },
   { id: "docker", name: "Docker", slug: "docker", color: "#2496ED", category: "infra" },
   { id: "postgresql", name: "PostgreSQL", slug: "postgresql", color: "#4169E1", category: "data" },
   { id: "mysql", name: "MySQL", slug: "mysql", color: "#4479A1", category: "data" },
-  { id: "magento", name: "Magento", slug: "magento", color: "#EE672F", category: "ecommerce" },
+  { id: "phpstorm", name: "Magento", slug: "phpstorm", color: "#EE672F", category: "ecommerce" },
   { id: "vtex", name: "VTEX", slug: "vtex", color: "#FF0080", category: "ecommerce" },
   { id: "graphql", name: "GraphQL", slug: "graphql", color: "#E10098", category: "api" },
   { id: "git", name: "Git", slug: "git", color: "#F05032", category: "devops" },
   { id: "nginx", name: "Nginx", slug: "nginx", color: "#009639", category: "devops" },
-  { id: "aws", name: "AWS", slug: "amazonwebservices", color: "#FF9900", category: "cloud" },
+  { id: "infracost", name: "AWS", slug: "infracost", color: "#FF9900", category: "cloud" },
 ];

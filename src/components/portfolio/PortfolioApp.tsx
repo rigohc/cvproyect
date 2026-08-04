@@ -4,7 +4,6 @@ import { MagneticButton } from "../amicro/magnetic-button";
 import { BobbingDots } from "../amicro/bobbing-dots";
 import TechConstellation from "../react/TechConstellation";
 import CompanyGrid from "../react/CompanyGrid";
-import PortfolioAssistant from "./PortfolioAssistant";
 import GitHubIntel from "./GitHubIntel";
 import ProfileGallery from "./ProfileGallery";
 import ContactForm from "./ContactForm";
@@ -255,7 +254,7 @@ export default function PortfolioApp({
       {/* CONTRATAR */}
       <section id="hire" className="pf-section">
         <p className="pf-kicker"><span>06</span> Por qué yo</p>
-        <h2>Señales que un reclutador puede validar.</h2>
+        <h3>+6 años desarrollando soluciones empresariales, eCommerce, microservicios y plataformas SaaS utilizando Node.js, React, Magento, TypeScript, Docker y Kubernetes.</h3>
         <div className="hire-grid">
           {hireSignals.map((signal, i) => (
             <motion.div
@@ -297,10 +296,6 @@ export default function PortfolioApp({
       </section>
         </main>
       </div>
-
-      <PortfolioAssistant />
-
-      
     </div>
   );
 }
