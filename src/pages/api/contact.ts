@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { parseJsonResponse } from "../../lib/contact/parseJsonResponse";
 
 export const prerender = false;
 
@@ -33,32 +34,9 @@ async function verifyTurnstile(token: string, ip: string | null): Promise<boolea
   });
 
   if (!response.ok) return false;
-  const data = (await response.json()) as { success?: boolean };
+
+  const data = await parseJsonResponse<{ success?: boolean }>(response);
   return Boolean(data.success);
-}
-
-async function sendViaWeb3Forms(payload: Record<string, string>): Promise<void> {
-  const accessKey = import.meta.env.WEB3FORMS_ACCESS_KEY;
-  if (!accessKey) {
-    throw new Error("Formulario no configurado. Usa WhatsApp o correo directo.");
-  }
-
-  const response = await fetch("https://api.web3forms.com/submit", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({
-      access_key: accessKey,
-      ...payload,
-      botcheck: "",
-      subject: "Nuevo mensaje — Portafolio Rigoberto",
-      from_name: "Portafolio RC",
-    }),
-  });
-
-  const data = (await response.json()) as { success?: boolean; message?: string };
-  if (!response.ok || !data.success) {
-    throw new Error(data.message ?? "Error al procesar el mensaje.");
-  }
 }
 
 export const POST: APIRoute = async ({ request, clientAddress }) => {
@@ -100,13 +78,8 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
       }
     }
 
-    await sendViaWeb3Forms({
-      name,
-      email,
-      message,
-      replyto: email,
-    });
-
+    // Web3Forms en plan gratuito solo acepta peticiones desde el navegador.
+    // El cliente envía el correo tras esta validación server-side.
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
       headers: { "Content-Type": "application/json" },

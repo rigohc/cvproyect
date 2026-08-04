@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import WhatsAppIcon from "../icons/WhatsAppIcon";
 import { contactFormValidator } from "../../lib/contact/ContactFormValidator";
-import { turnstileSiteKey } from "../../lib/contact/contactFormConfig";
+import { turnstileSiteKey, web3FormsAccessKey } from "../../lib/contact/contactFormConfig";
 import { TurnstileWidgetManager } from "../../lib/contact/TurnstileWidgetManager";
+import { submitToWeb3Forms } from "../../lib/contact/web3formsClient";
 import "./ContactForm.css";
 
 interface ContactFormProps {
@@ -87,8 +88,10 @@ export default function ContactForm({ email, whatsappUrl, location }: ContactFor
       const data = (await response.json()) as { ok?: boolean; error?: string };
 
       if (!response.ok || !data.ok) {
-        throw new Error(data.error ?? "No se pudo enviar el mensaje.");
+        throw new Error(data.error ?? "No se pudo validar el mensaje.");
       }
+
+      await submitToWeb3Forms(web3FormsAccessKey, clean);
 
       setStatus("success");
       setName("");
