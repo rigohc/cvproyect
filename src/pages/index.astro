@@ -35,7 +35,7 @@ import {
         <button class="cta-link cta-link--outline" id="print-resume" type="button">
           CV PDF ↓
         </button>
-        <a class="cta-link" href={contact.linkedin} target="_blank" rel="noopener noreferrer">
+        <a class="cta-link cta-link--linkedin" href={contact.linkedin} target="_blank" rel="noopener noreferrer">
           LinkedIn ↗
         </a>
       </div>
@@ -76,7 +76,8 @@ import {
 
 <style is:global>
   .site-shell--wide {
-    width: min(100%, 100%);
+    width: 100%;
+    max-width: none;
     border-inline: 0;
   }
 </style>

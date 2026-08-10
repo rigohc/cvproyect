@@ -92,6 +92,17 @@ a {
 .site-shell {
   width: min(100%, 1280px);
   margin-inline: auto;
+  overflow-x: clip;
+}
+
+.site-shell--wide {
+  width: 100%;
+  max-width: none;
+}
+
+.screen-only {
+  width: 100%;
+  overflow-x: clip;
 }
 
 .topbar {
@@ -102,8 +113,9 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  min-height: 64px;
+  min-height: var(--topbar-h);
   padding: 0 28px;
+  padding-top: var(--safe-top);
   border-bottom: 1px solid var(--line);
   background: var(--header);
   backdrop-filter: blur(20px);
@@ -113,6 +125,8 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
+  flex-shrink: 1;
 }
 
 .brand-mark {
@@ -153,6 +167,7 @@ a {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 .icon-button {
@@ -457,18 +472,23 @@ a {
 
 @media (max-width: 640px) {
   .topbar {
-    min-height: 56px;
+    min-height: var(--topbar-h);
     padding-inline: 12px;
+    gap: 8px;
   }
 
   .brand-mark {
     width: 32px;
     height: 32px;
     font-size: 11px;
+    flex-shrink: 0;
   }
 
   .brand-name {
     font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .topbar-actions {
@@ -483,13 +503,43 @@ a {
 
   .topbar-actions .cta-link:not(.cta-link--outline) {
     min-height: 34px;
-    padding: 0 12px;
+    padding: 0 10px;
     font-size: 11px;
   }
 
   .icon-button {
     width: 34px;
     height: 34px;
+  }
+
+  .social-links {
+    width: 100%;
+  }
+
+  .social-links a {
+    flex: 1 1 calc(50% - 4px);
+    justify-content: center;
+    min-width: 0;
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .footer-brand {
+    word-break: break-word;
+  }
+
+  .cv-card {
+    min-height: 0;
+  }
+
+  .card-topline h3 {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar-actions .cta-link--linkedin {
+    display: none;
   }
 }
 

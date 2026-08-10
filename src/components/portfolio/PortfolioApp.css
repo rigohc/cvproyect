@@ -1,15 +1,21 @@
+.portfolio-app {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
 .portfolio-layout {
   display: grid;
   grid-template-columns: 200px minmax(0, 1fr);
   max-width: 1180px;
+  width: 100%;
   margin-inline: auto;
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - var(--topbar-h));
 }
 .command-rail {
   position: sticky;
-  top: 64px;
+  top: var(--topbar-h);
   align-self: start;
-  height: calc(100vh - 64px);
+  height: calc(100vh - var(--topbar-h));
   padding: 28px 0 28px 28px;
   border-right: 1px solid var(--line);
 }
@@ -61,8 +67,8 @@
   padding-right: 28px;
 }
 .pf-section {
-  scroll-margin-top: 88px;
-  padding: 64px 0 64px 48px;
+  scroll-margin-top: calc(var(--topbar-h) + 16px);
+  padding: 64px 28px 64px 48px;
   border-bottom: 1px solid var(--line);
 }
 .pf-hero {
@@ -101,6 +107,7 @@
   font-weight: 800;
   letter-spacing: -0.05em;
   line-height: 0.92;
+  overflow-wrap: anywhere;
 }
 .h1-gradient {
   background: var(--gradient);
@@ -202,6 +209,16 @@
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.1;
+}
+.pf-section h3 {
+  margin: 0 0 20px;
+  font-family: var(--font-display);
+  font-size: clamp(17px, 4.2vw, 22px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.45;
+  color: var(--text-soft);
+  max-width: 640px;
 }
 .pf-lead {
   margin: 0 0 28px;
@@ -388,10 +405,12 @@
   .portfolio-layout { grid-template-columns: 1fr; }
   .command-rail {
     position: sticky;
-    top: 64px;
+    top: var(--topbar-h);
     z-index: 40;
+    width: 100%;
+    max-width: 100%;
     height: auto;
-    padding: 12px 16px;
+    padding: 10px 12px;
     border-right: 0;
     border-bottom: 1px solid var(--line);
     background: var(--header);
@@ -401,9 +420,11 @@
   .command-nav {
     flex-direction: row;
     overflow-x: auto;
+    overscroll-behavior-x: contain;
     scrollbar-width: none;
     gap: 4px;
     -webkit-overflow-scrolling: touch;
+    max-width: 100%;
   }
   .command-nav::-webkit-scrollbar { display: none; }
   .command-nav a {
@@ -415,41 +436,86 @@
   .rail-dot { display: none; }
   .portfolio-main { max-width: none; padding-right: 0; }
   .pf-section {
-    scroll-margin-top: 120px;
+    scroll-margin-top: calc(var(--topbar-h) + var(--nav-rail-h) + 12px);
     padding: 40px 20px;
   }
-  .pf-hero { min-height: auto; padding-top: 28px; }
-  .pf-contact { padding-bottom: calc(180px + var(--safe-bottom)); }
+  .pf-hero { min-height: auto; padding-top: 24px; }
+  .pf-contact { padding-bottom: calc(200px + var(--safe-bottom)); }
   .pf-stats div { min-width: 80px; }
 }
 
 /* Móvil */
 @media (max-width: 640px) {
-  .command-rail { padding: 10px 12px; }
+  .command-rail { padding: 8px 10px; }
   .command-nav a { padding: 6px 10px; font-size: 11px; }
-  .pf-section { padding: 32px 16px; }
-  .h1-line { font-size: clamp(36px, 11vw, 52px); }
-  .pf-hook { font-size: 15px; }
-  .pf-hero-actions { flex-direction: column; }
-  .pf-hero-actions .cta-link { width: 100%; justify-content: center; text-align: center; }
-  .pf-stats { gap: 8px; }
+  .pf-section {
+    padding: 28px 16px;
+    scroll-margin-top: calc(var(--topbar-h) + var(--nav-rail-h) + 8px);
+  }
+  .h1-line {
+    font-size: clamp(32px, 10vw, 48px);
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+  }
+  .pf-hook { font-size: 15px; max-width: none; }
+  .pf-mission { font-size: 13px; max-width: none; }
+  .pf-lead { max-width: none; }
+  .pf-hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .pf-hero-actions .cta-link {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  .pf-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
   .pf-stats div {
-    flex: 1 1 calc(50% - 4px);
+    flex: none;
     min-width: 0;
-    padding: 10px 12px;
+    padding: 10px 8px;
   }
-  .pf-stats strong { font-size: 18px; }
-  .project-card { padding: 18px; }
-  .project-card-head { flex-direction: column; }
+  .pf-stats strong { font-size: 17px; }
+  .pf-stats span { font-size: 9px; }
+  .project-tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    margin-inline: -16px;
+    padding-inline: 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .project-tabs::-webkit-scrollbar { display: none; }
+  .project-tabs button { flex: none; white-space: nowrap; }
+  .project-card { padding: 16px; }
+  .project-card-head { flex-direction: column; align-items: flex-start; }
+  .project-card h3 { font-size: 18px; }
+  .arch-node { min-width: 0; width: 100%; }
   .journey-step {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 16px;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+    padding: 14px;
   }
-  .journey-num { width: 36px; height: 36px; font-size: 12px; }
-  .hire-metric strong { font-size: 26px; }
+  .journey-num { width: 32px; height: 32px; font-size: 11px; }
+  .hire-metric strong { font-size: 24px; }
   .contact-actions { flex-direction: column; }
   .contact-actions .cta-link { width: 100%; justify-content: center; }
+  .marquee-wrap { margin-inline: 0; }
+}
+
+@media (max-width: 480px) {
+  .pf-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .pf-stats div:last-child {
+    grid-column: span 2;
+  }
+  .pf-section h3 { font-size: 16px; }
 }
 
 @media (max-width: 600px) {

@@ -6,6 +6,21 @@
   --bp-tablet-max: 900px;
   --bp-desktop-min: 901px;
   --content-max: 1180px;
+  --topbar-h: 64px;
+  --nav-rail-h: 0px;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-top: env(safe-area-inset-top, 0px);
+}
+
+@media (max-width: 900px) {
+  :root {
+    --nav-rail-h: 46px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --topbar-h: 56px;
+    --nav-rail-h: 42px;
+  }
 }

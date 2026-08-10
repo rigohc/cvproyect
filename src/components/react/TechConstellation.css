@@ -107,6 +107,9 @@
   color: var(--text);
 }
 @media (max-width: 640px) {
-  .tech-canvas-wrap { max-height: 360px; }
-  .tech-node { width: 44px; height: 44px; }
+  .tech-panel-header { padding: 12px 14px; font-size: 10px; }
+  .tech-canvas-wrap { max-height: min(72vw, 320px); }
+  .tech-node { width: 40px; height: 40px; }
+  .tech-legend { padding: 14px; gap: 5px; }
+  .tech-chip { padding: 4px 10px; font-size: 9px; }
 }
