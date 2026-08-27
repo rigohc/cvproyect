@@ -88,7 +88,7 @@
   color: var(--text-faint);
   font-size: 18px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 160ms ease, color 160ms ease;
 }
 
 .audio-close:hover {
@@ -111,8 +111,8 @@
 @media (max-width: 640px) {
   .audio-widget {
     bottom: calc(68px + var(--safe-bottom));
-    left: 12px;
-    right: 12px;
+    left: max(12px, env(safe-area-inset-left));
+    right: max(12px, env(safe-area-inset-right));
     transform: none !important;
     width: auto;
     grid-template-columns: auto 1fr auto;

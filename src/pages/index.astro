@@ -20,7 +20,12 @@ import {
         <span class="brand-name">rigoberto<span>*</span></span>
       </a>
 
-      <p class="topbar-tagline">rigohc · Full Stack</p>
+      <nav class="topbar-nav" aria-label="Navegación principal">
+        <a href="#about">Perfil</a>
+        <a href="#ecommerce">Negocio</a>
+        <a href="#projects">Proyectos</a>
+        <a href="#contact">Contacto</a>
+      </nav>
 
       <div class="topbar-actions">
         <button class="icon-button" id="theme-toggle" type="button" aria-label="Cambiar tema">
@@ -35,9 +40,7 @@ import {
         <button class="cta-link cta-link--outline" id="print-resume" type="button">
           CV PDF ↓
         </button>
-        <a class="cta-link cta-link--linkedin" href={contact.linkedin} target="_blank" rel="noopener noreferrer">
-          LinkedIn ↗
-        </a>
+        <a class="cta-link cta-link--linkedin" href="#contact">Hablemos</a>
       </div>
     </header>
 
@@ -57,15 +60,16 @@ import {
 
       <PortfolioAssistant client:load />
 
-      <footer class="footer footer--compact">
-        <div class="footer-brand">© {new Date().getFullYear()} · {profile.name}</div>
-        <div class="footer-signature">
-          <p>{profile.title} · {profile.tagline}</p>
-        </div>
-        <div class="social-links no-print">
-          <a href={`https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(contact.whatsappMessage)}`} target="_blank" rel="noopener noreferrer"><span>💬</span> WhatsApp</a>
-          <a href={`mailto:${contact.email}`}><span>✉</span> Email</a>
-          <a href="https://github.com/rigohc" target="_blank" rel="noopener noreferrer"><span>⌘</span> GitHub</a>
+      <footer class="footer footer--statement">
+        <p class="footer-statement">Construyo tecnología que entiende la operación, no sólo el ticket.</p>
+        <div class="footer-meta">
+          <div class="footer-brand">© {new Date().getFullYear()} · {profile.name}</div>
+          <div class="social-links no-print">
+            <a href={`https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(contact.whatsappMessage)}`} target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
+            <a href={`mailto:${contact.email}`}>Email ↗</a>
+            <a href="https://github.com/rigohc" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            <a href={contact.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+          </div>
         </div>
       </footer>
     </div>

@@ -20,3 +20,5 @@ dist
 .env.production
 .env.development.local
 .env.test.local
+.hallmark
+.astro

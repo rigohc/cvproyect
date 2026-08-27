@@ -63,6 +63,17 @@ export interface HireSignal {
   description: string;
 }
 
+export interface CommercePerspective {
+  id: string;
+  shortLabel: string;
+  businessNeed: string;
+  context: string;
+  operationalRisk: string;
+  systemDecision: string;
+  evidence: string;
+  capabilities: string[];
+}
+
 export interface AssistantEntry {
   keywords: string[];
   answer: string;
@@ -127,6 +138,68 @@ export const featuredProjects: PortfolioProject[] = [
       { step: "05", title: "DevOps", detail: "Docker · Nginx · CI/CD" },
     ],
   },
+];
+
+export const commercePerspectives: CommercePerspective[] = [
+  {
+    id: "catalog-scale",
+    shortLabel: "Catálogo",
+    businessNeed: "Mover catálogos grandes sin detener la operación.",
+    context:
+      "El equipo comercial necesita publicar, corregir y enriquecer productos sin convertir cada carga en una ventana de mantenimiento.",
+    operationalRisk:
+      "Archivos incompletos, validaciones tardías y procesos síncronos convierten un error puntual en bloqueo operativo.",
+    systemDecision:
+      "Separar validación, procesamiento y seguimiento; ejecutar cargas por eventos y devolver estados que permitan corregir y reintentar.",
+    evidence: "Andromeda · carga masiva de productos con RabbitMQ",
+    capabilities: ["Validación", "Procesos async", "Reintentos", "Trazabilidad"],
+  },
+  {
+    id: "omnichannel",
+    shortLabel: "Canales",
+    businessNeed: "Vender en varios canales sin fragmentar el negocio.",
+    context:
+      "VTEX, marketplaces y aplicaciones internas deben compartir información sin obligar al core comercial a conocer cada integración.",
+    operationalRisk:
+      "Acoplar canales directamente duplica reglas, dificulta los cambios y genera versiones distintas de clientes, pedidos y catálogo.",
+    systemDecision:
+      "Definir contratos claros, aislar adaptadores por canal y desacoplar procesos con APIs, servicios y mensajería cuando el flujo lo exige.",
+    evidence: "HEB / SISMEX · VTEX, Rappi y Uber Eats",
+    capabilities: ["REST", "GraphQL", "Adaptadores", "Eventos"],
+  },
+  {
+    id: "post-purchase",
+    shortLabel: "Operación",
+    businessNeed: "Cuidar lo que ocurre después del checkout.",
+    context:
+      "La confianza del cliente también depende de pedidos, permisos, facturación, suscripciones y herramientas internas comprensibles.",
+    operationalRisk:
+      "Una compra exitosa pierde valor cuando la operación posterior necesita correcciones manuales o no puede explicar qué ocurrió.",
+    systemDecision:
+      "Modelar cada responsabilidad como un módulo observable, con reglas explícitas y una experiencia interna que acompañe al proceso.",
+    evidence: "Andromeda + HEB · clientes, facturación y suscripciones",
+    capabilities: ["Clientes", "Facturación", "Suscripciones", "RBAC"],
+  },
+  {
+    id: "platform-evolution",
+    shortLabel: "Evolución",
+    businessNeed: "Cambiar la plataforma sin romper lo que ya vende.",
+    context:
+      "Promociones, reglas y canales evolucionan continuamente; el sistema debe admitir cambios sin rehacer el comercio completo.",
+    operationalRisk:
+      "Modificar el core para cada necesidad aumenta regresiones, tiempos de entrega y dependencia entre equipos.",
+    systemDecision:
+      "Extender mediante módulos, plugins, observers y servicios con límites claros, respaldados por CI/CD y despliegues repetibles.",
+    evidence: "HEB / MORWI · ecosistema Magento 2 enterprise",
+    capabilities: ["Módulos", "Plugins", "Observers", "CI/CD"],
+  },
+];
+
+export const commercePrinciples = [
+  "Proteger la operación antes de automatizarla",
+  "Diseñar errores recuperables, no sólo caminos felices",
+  "Desacoplar donde existe variación o alto volumen",
+  "Tratar la experiencia interna como parte del producto",
 ];
 
 export const journeySteps: JourneyStep[] = [
@@ -257,6 +330,7 @@ export const commandSections = [
   { id: "command", label: "Inicio" },
   { id: "about", label: "Perfil" },
   { id: "skills", label: "Stack" },
+  { id: "ecommerce", label: "E-commerce" },
   { id: "projects", label: "Proyectos" },
   { id: "github", label: "GitHub" },
   { id: "journey", label: "Trayectoria" },

@@ -17,10 +17,7 @@
   font-family: var(--font-display);
   font-size: 24px;
   font-weight: 800;
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--accent);
 }
 .github-metric span { color: var(--text-faint); font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
 .github-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -37,7 +34,7 @@
 .lang-bar em, .repo-row em { color: var(--text-faint); font-style: normal; font-size: 9px; }
 .repo-row { display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; font-size: 11px; border-bottom: 1px solid var(--line); }
 @media (max-width: 720px) {
-  .github-metrics { grid-template-columns: repeat(2, 1fr); }
+  .github-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .github-panels { grid-template-columns: 1fr; }
   .lang-bar { grid-template-columns: 60px 1fr 28px; font-size: 10px; }
 }

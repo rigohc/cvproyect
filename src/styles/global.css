@@ -1,28 +1,43 @@
 @import "tailwindcss";
 @import "./breakpoints.css";
 
-/* Horizon — identidad propia (no itsfree/midu) */
+/* Hallmark · pre-emit critique: P5 H5 E4 S5 R5 V5
+ * genre: editorial-technical · macrostructure: Split Studio
+ * nav: N5 Floating Pill · footer: Ft5 Statement
+ * theme: studied-DNA (source: https://rishikmoraportfolio.vercel.app/)
+ * observed-fonts: Fredoka + Nunito · adapted-fonts: Plus Jakarta Sans + Courier Prime
+ * studied: yes · DNA-source: url · rhythm: verified in local implementation
+ */
 
 :root {
   color-scheme: dark;
-  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-  --bg: #110f14;
-  --bg-raised: #17141c;
-  --bg-card: #1c1924;
-  --bg-soft: #221e2a;
-  --text: #f3eee8;
-  --text-soft: #b8b0a8;
-  --text-faint: #7a7280;
+  --font-mono: "Courier Prime", ui-monospace, monospace;
+  --bg: #121014;
+  --bg-raised: #19161d;
+  --bg-card: #201c24;
+  --bg-soft: #29232d;
+  --paper: #f4ead5;
+  --paper-raised: #fff8e9;
+  --paper-soft: #e8dcc5;
+  --paper-ink: #201a18;
+  --paper-ink-soft: #5e554d;
+  --paper-ink-faint: #796f66;
+  --paper-line: rgba(32, 26, 24, 0.18);
+  --paper-line-strong: rgba(32, 26, 24, 0.3);
+  --text: #f8f1e7;
+  --text-soft: #c8beb4;
+  --text-faint: #91868f;
   --line: rgba(255, 255, 255, 0.08);
   --line-strong: rgba(255, 255, 255, 0.14);
-  --accent: #ff6b4a;
-  --accent-2: #4ecdc4;
+  --accent: #ff6547;
+  --accent-2: #56d5cc;
+  --accent-ink: #201a18;
   --accent-soft: rgba(255, 107, 74, 0.14);
   --accent-soft-2: rgba(78, 205, 196, 0.12);
-  --gradient: linear-gradient(135deg, #ff6b4a 0%, #4ecdc4 100%);
-  --header: rgba(17, 15, 20, 0.82);
+  --gradient: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  --header: rgba(18, 16, 20, 0.9);
   --shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
   --radius-sm: 8px;
   --radius-md: 14px;
@@ -60,11 +75,8 @@ html {
 
 body {
   margin: 0;
-  min-width: 320px;
-  background:
-    radial-gradient(ellipse 80% 50% at 10% -10%, rgba(255, 107, 74, 0.12), transparent 50%),
-    radial-gradient(ellipse 60% 40% at 90% 0%, rgba(78, 205, 196, 0.1), transparent 45%),
-    var(--bg);
+  min-width: 0;
+  background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
   font-size: 15px;
@@ -77,6 +89,17 @@ button,
 input {
   color: inherit;
   font: inherit;
+}
+
+:where(a, button, input, textarea):focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 a {
@@ -108,17 +131,20 @@ a {
 .topbar {
   position: sticky;
   z-index: 50;
-  top: 0;
+  top: max(10px, var(--safe-top));
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  min-height: var(--topbar-h);
-  padding: 0 28px;
-  padding-top: var(--safe-top);
-  border-bottom: 1px solid var(--line);
+  width: min(calc(100% - 32px), 1040px);
+  min-height: 58px;
+  margin: 12px auto 0;
+  padding: 8px 10px 8px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
   background: var(--header);
   backdrop-filter: blur(20px);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.24);
 }
 
 .brand {
@@ -127,6 +153,7 @@ a {
   gap: 10px;
   min-width: 0;
   flex-shrink: 1;
+  min-height: 44px;
 }
 
 .brand-mark {
@@ -134,12 +161,14 @@ a {
   width: 36px;
   height: 36px;
   place-items: center;
-  border-radius: var(--radius-sm);
-  background: var(--gradient);
-  color: white;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--paper-ink);
   font-family: var(--font-display);
   font-size: 12px;
   font-weight: 700;
+  flex-shrink: 0;
 }
 
 .brand-name {
@@ -150,10 +179,7 @@ a {
 }
 
 .brand-name span {
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--accent);
 }
 
 .topbar-tagline {
@@ -161,6 +187,30 @@ a {
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.04em;
+}
+
+.topbar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.topbar-nav a {
+  min-height: 40px;
+  padding: 10px 13px;
+  border-radius: 999px;
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  white-space: nowrap;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.topbar-nav a:hover,
+.topbar-nav a:focus-visible {
+  background: var(--bg-soft);
+  color: var(--text);
 }
 
 .topbar-actions {
@@ -176,7 +226,7 @@ a {
   height: 38px;
   place-items: center;
   border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
+  border-radius: 50%;
   background: var(--bg-raised);
   cursor: pointer;
   transition: border-color 160ms ease, background 160ms ease;
@@ -208,12 +258,12 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 38px;
+  min-height: 44px;
   padding: 0 18px;
   border: none;
   border-radius: 999px;
-  background: var(--gradient);
-  color: white;
+  background: var(--accent);
+  color: var(--accent-ink);
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 600;
@@ -372,28 +422,32 @@ a {
 }
 
 .footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  min-height: 72px;
-  padding: 20px 28px;
-  border-top: 1px solid var(--line);
+  width: min(calc(100% - 48px), 1120px);
+  margin-inline: auto;
+  padding: 72px 0 36px;
   color: var(--text-faint);
   font-size: 12px;
 }
 
-.footer--compact {
-  max-width: 1180px;
-  margin-inline: auto;
-  padding-inline: 228px 28px;
+.footer-statement {
+  max-width: 25ch;
+  margin: 0 0 56px;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: clamp(30px, 5vw, 62px);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.04;
+  overflow-wrap: anywhere;
 }
 
-@media (min-width: 901px) and (max-width: 1180px) {
-  .footer--compact {
-    padding-inline: 48px 24px;
-  }
+.footer-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line-strong);
 }
 
 .footer-brand {
@@ -435,11 +489,11 @@ a {
 
 @media (max-width: 900px) {
   .topbar {
-    padding-inline: 16px;
+    width: min(calc(100% - 24px), 720px);
     gap: 10px;
   }
 
-  .topbar-tagline {
+  .topbar-nav {
     display: none;
   }
 
@@ -448,15 +502,6 @@ a {
     align-items: flex-start;
     gap: 14px;
     padding: 20px 16px calc(20px + var(--safe-bottom));
-  }
-
-  .footer--compact {
-    max-width: none;
-    padding-inline: 16px;
-  }
-
-  .footer-signature {
-    order: 2;
   }
 
   .social-links {
@@ -472,8 +517,8 @@ a {
 
 @media (max-width: 640px) {
   .topbar {
-    min-height: var(--topbar-h);
-    padding-inline: 12px;
+    min-height: 54px;
+    padding: 7px;
     gap: 8px;
   }
 
@@ -493,6 +538,17 @@ a {
 
   .topbar-actions {
     gap: 6px;
+  }
+
+  .topbar-actions .icon-button,
+  .topbar-actions .cta-link--outline {
+    display: none;
+  }
+
+  .topbar-actions .cta-link--linkedin {
+    display: inline-flex;
+    min-height: 40px;
+    padding-inline: 14px;
   }
 
   .topbar-actions .cta-link--outline {
@@ -524,6 +580,10 @@ a {
     font-size: 11px;
   }
 
+  .footer { width: min(calc(100% - 32px), 1120px); padding-top: 52px; }
+  .footer-statement { margin-bottom: 40px; }
+  .footer-meta { align-items: flex-start; flex-direction: column; }
+
   .footer-brand {
     word-break: break-word;
   }
@@ -537,15 +597,28 @@ a {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 720px) {
   .topbar-actions .cta-link--linkedin {
     display: none;
   }
 }
 
 @media (max-width: 400px) {
-  .topbar-actions .cta-link--outline {
+  .brand-name {
     display: none;
+  }
+}
+
+@media (max-width: 340px) {
+  .topbar-actions .cta-link--outline {
+    padding-inline: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar-actions .cta-link--linkedin {
+    display: inline-flex;
+    min-height: 44px;
   }
 }
 

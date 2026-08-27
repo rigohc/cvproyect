@@ -20,8 +20,8 @@ interface TechConstellationProps {
 function polarPosition(index: number, total: number, radius: number, center: number) {
   const angle = (index / total) * Math.PI * 2 - Math.PI / 2;
   return {
-    x: center + Math.cos(angle) * radius,
-    y: center + Math.sin(angle) * radius,
+    x: Number((center + Math.cos(angle) * radius).toFixed(4)),
+    y: Number((center + Math.sin(angle) * radius).toFixed(4)),
   };
 }
 
@@ -58,7 +58,7 @@ export default function TechConstellation({ technologies, compact = false }: Tec
       <div className="tech-panel">
         <div className="tech-panel-header">
           <BobbingDots />
-          <span>Stack en movimiento · {technologies.length} tecnologías</span>
+          <span>Stack en constante evolución · {technologies.length} tecnologías</span>
         </div>
 
         <div className={`tech-canvas-wrap ${compact ? "tech-canvas-wrap--compact" : "tech-canvas-wrap--full"}`}>

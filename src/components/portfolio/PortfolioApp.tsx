@@ -7,6 +7,7 @@ import CompanyGrid from "../react/CompanyGrid";
 import GitHubIntel from "./GitHubIntel";
 import ProfileGallery from "./ProfileGallery";
 import ContactForm from "./ContactForm";
+import EcommerceExpertiseSection from "./EcommerceExpertiseSection";
 import type { Contact, Recommendation, TechItem, CompanyItem } from "../../data/cv";
 import {
   commandSections,
@@ -124,56 +125,70 @@ export default function PortfolioApp({
         <main className="portfolio-main">
       {/* INICIO */}
       <section id="command" className="pf-section pf-hero">
-        <div className="hero-glow" aria-hidden="true" />
-        <div className="pf-hero-badges">
-          {portfolioHeadline.roles.map((role) => (
-            <span key={role}>{role}</span>
-          ))}
+        <div className="pf-hero-copy">
+          <div className="pf-hero-badges">
+            {portfolioHeadline.roles.map((role) => (
+              <span key={role}>{role}</span>
+            ))}
+          </div>
+          <h1>
+            <span className="h1-line">{name.split(" ")[0]}</span>
+            <span className="h1-line h1-accent">{name.split(" ").slice(1).join(" ")}</span>
+          </h1>
+          <p className="pf-hook">{portfolioHeadline.hook}</p>
+          <p className="pf-mission">{portfolioHeadline.mission}</p>
+          <div className="pf-hero-actions no-print">
+            <a href="#projects" className="cta-link">Ver proyectos</a>
+            <MagneticButton href={`mailto:${email}`}>Hablemos →</MagneticButton>
+          </div>
         </div>
-        <h1>
-          <span className="h1-line">{name.split(" ")[0]}</span>
-          <span className="h1-line h1-gradient">{name.split(" ").slice(1).join(" ")}</span>
-        </h1>
-        <p className="pf-hook">{portfolioHeadline.hook}</p>
-        <p className="pf-mission">{portfolioHeadline.mission}</p>
-        <div className="pf-hero-actions no-print">
-          <a href="#projects" className="cta-link">Ver proyectos</a>
-          <MagneticButton href={`mailto:${email}`}>Hablemos →</MagneticButton>
-        </div>
-        <div className="pf-stats">
-          <div><strong>6+</strong><span>años exp.</span></div>
-          <div><strong>4</strong><span>empresas</span></div>
-          <div><strong>20+</strong><span>tecnologías</span></div>
+        <div className="pf-hero-proof">
+          <figure className="hero-portrait">
+            <img src="/images/gallery/desk-ofiice.png" alt="Rigoberto Hernández trabajando en un entorno profesional" width="576" height="1024" fetchPriority="high" />
+            <figcaption>
+              <span>Ingeniería + operación</span>
+              <strong>Disponible para nuevos retos</strong>
+            </figcaption>
+          </figure>
+          <div className="pf-stats" aria-label="Resumen profesional">
+            <div><strong>6+</strong><span>años de experiencia</span></div>
+            <div><strong>4</strong><span>empresas</span></div>
+            <div><strong>20+</strong><span>tecnologías</span></div>
+          </div>
         </div>
       </section>
 
       <Marquee />
 
       {/* PERFIL */}
-      <section id="about" className="pf-section">
-        <p className="pf-kicker"><span>01</span> Perfil</p>
-        <h2>Retail complejo, sistemas claros.</h2>
-        <p className="pf-lead">{summary}</p>
-        <ProfileGallery />
-        <div className="pf-proof-grid">
-          {["E-commerce Enterprise", "Automatización", "Liderazgo Técnico", "Event-Driven"].map((item) => (
-            <div key={item} className="pf-proof-card">{item}</div>
-          ))}
+      <section id="about" className="pf-section pf-section--paper">
+        <div className="pf-split pf-split--profile">
+          <div className="pf-section-copy">
+            <h2>Retail complejo, sistemas claros.</h2>
+            <p className="pf-lead">{summary}</p>
+            <div className="pf-proof-grid">
+              {["E-commerce Enterprise", "Automatización", "Liderazgo Técnico", "Event-Driven"].map((item) => (
+                <div key={item} className="pf-proof-card">{item}</div>
+              ))}
+            </div>
+          </div>
+          <ProfileGallery />
         </div>
         <CompanyGrid companies={companies} compact />
       </section>
 
       {/* STACK */}
       <section id="skills" className="pf-section">
-        <p className="pf-kicker"><span>02</span> Stack</p>
         <h2>El mapa detrás de cada entrega.</h2>
         <p className="pf-lead">React, Node, RabbitMQ, Magento, VTEX — cada nodo es experiencia real.</p>
         <TechConstellation technologies={technologies} compact />
       </section>
 
+      <EcommerceExpertiseSection />
+
       {/* PROYECTOS */}
-      <section id="projects" className="pf-section">
-        <p className="pf-kicker"><span>03</span> Proyectos</p>
+      <section id="projects" className="pf-section pf-section--paper">
+        <p className="pf-kicker"><span>04</span> Proyectos</p>
         <h2>Arquitectura que se puede explicar.</h2>
         <div className="project-tabs no-print">
           {featuredProjects.map((p) => (
@@ -214,7 +229,6 @@ export default function PortfolioApp({
 
       {/* GITHUB */}
       <section id="github" className="pf-section">
-        <p className="pf-kicker"><span>04</span> GitHub</p>
         <h2>Actividad verificable en código.</h2>
         <p className="pf-lead">
           Datos en vivo desde{" "}
@@ -226,8 +240,7 @@ export default function PortfolioApp({
       </section>
 
       {/* TRAYECTORIA */}
-      <section id="journey" className="pf-section">
-        <p className="pf-kicker"><span>05</span> Trayectoria</p>
+      <section id="journey" className="pf-section pf-section--paper">
         <h2>Cómo llegué hasta aquí.</h2>
         <div className="journey-track">
           {journeySteps.map((step, i) => (
@@ -253,7 +266,6 @@ export default function PortfolioApp({
 
       {/* CONTRATAR */}
       <section id="hire" className="pf-section">
-        <p className="pf-kicker"><span>06</span> Por qué yo</p>
         <h3>+6 años desarrollando soluciones empresariales, eCommerce, microservicios y plataformas SaaS utilizando Node.js, React, Magento, TypeScript, Docker y Kubernetes.</h3>
         <div className="hire-grid">
           {hireSignals.map((signal, i) => (
@@ -285,8 +297,7 @@ export default function PortfolioApp({
       </section>
 
       {/* CONTACTO */}
-      <section id="contact" className="pf-section pf-contact">
-        <p className="pf-kicker"><span>07</span> Contacto</p>
+      <section id="contact" className="pf-section pf-section--paper pf-contact">
         <h2>Hagamos algo que valga la pena.</h2>
         <p className="pf-lead">
           Prefiero WhatsApp antes que llamadas. El formulario es seguro: verificación anti-bots y sin solicitud de datos sensibles.

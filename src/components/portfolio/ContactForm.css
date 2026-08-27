@@ -34,6 +34,7 @@
 .whatsapp-btn-text {
   display: grid;
   gap: 2px;
+  min-width: 0;
   text-align: left;
 }
 .whatsapp-btn-text strong {
@@ -48,6 +49,7 @@
   color: var(--text-soft);
   font-family: var(--font-mono);
   font-size: 13px;
+  overflow-wrap: anywhere;
 }
 .contact-email-link:hover { color: var(--accent); }
 .contact-location {
@@ -93,12 +95,23 @@
   background: var(--bg-raised);
   font-size: 14px;
   resize: vertical;
-  outline: none;
-  transition: border-color 160ms ease;
+  outline: 2px solid transparent;
+  outline-offset: 1px;
+  transition: background-color 160ms ease, border-color 160ms ease;
 }
-.contact-form input:focus,
-.contact-form textarea:focus {
-  border-color: var(--accent);
+.contact-form input { min-height: 44px; }
+.contact-form textarea { min-height: 112px; }
+.contact-form input:hover,
+.contact-form textarea:hover { background: var(--bg-soft); }
+.contact-form input:focus-visible,
+.contact-form textarea:focus-visible {
+  border-color: var(--line-strong);
+  outline-color: var(--accent);
+}
+.contact-form input:disabled,
+.contact-form textarea:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 .contact-honeypot {
   position: absolute;
@@ -129,6 +142,7 @@
   cursor: not-allowed;
 }
 .contact-feedback {
+  min-height: 1lh;
   margin: 0;
   font-size: 13px;
 }
@@ -153,5 +167,13 @@
     transform-origin: left top;
     width: calc(100% / 0.92);
     margin-bottom: -4px;
+  }
+}
+
+@media (max-width: 340px) {
+  .contact-turnstile {
+    transform: scale(0.84);
+    width: calc(100% / 0.84);
+    margin-bottom: -10px;
   }
 }
